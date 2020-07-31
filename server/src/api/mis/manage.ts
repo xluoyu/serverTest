@@ -129,7 +129,7 @@ router.get('/getrolesList', async (ctx:Context) => {
   }
 })
 
-router.post('/addRouter', async (ctx:Context) => {
+router.post('/updateRoles', async (ctx:Context) => {
 
 })
 
