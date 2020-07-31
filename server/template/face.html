@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{margin: 0;padding: 0;}
+    .btns{
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        width: 100%;
+        padding: 20px;
+    }
+    .btn{
+        width: 100px;
+        height: 40px;
+        position: relative;
+        background-color: skyblue;
+        color: #fff;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+    }
+    input[type="file"]{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+    button{
+        width: 100px;
+        height: 40px;
+    }
+    .photo img{
+        max-width: 300px;
+        max-height: 300px;
+    }
+</style>
+<body>
+    <div class="btns">
+        <div class="photo" id="img1">
+            <img src="" alt="">
+            <div class="btn">
+                添加图片
+                <input type="file" accept="image/*">
+            </div>
+        </div>
+        <button id="btn">合成</button>
+        <div class="photo" id="img2">
+            <img src="" alt="">
+            <div class="btn">
+                添加图片
+                <input type="file" accept="image/*">
+            </div>
+        </div>
+    </div>
+    <img src="" alt="" id="res">
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+let ipt = $("input[type=file]")
+let data = {
+    img1: '',
+    img2: ''
+}
+ipt.change(function(e){
+    var _$this = $(this)
+    var file = e.target.files[0]
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = function(e) {
+        var parent = _$this.parent().parent()
+        var imgBase64 = e.target.result
+        $("img", parent).attr("src", imgBase64)
+        data[parent.attr("id")] = imgBase64
+    }
+})
+$("#btn").click(function(){
+    $.ajax({
+        url: '/api/face',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(res) {
+            const head = 'data:image/png;base64,'
+            $("#res").attr("src", head + res.result)
+        },
+        erroe: function(err) {
+            console.log(err)
+        }
+    })
+})
+</script>
+</html>
