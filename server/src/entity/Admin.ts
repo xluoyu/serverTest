@@ -1,9 +1,25 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, ManyToMany, JoinTable} from 'typeorm';
+
+@Entity()
+export class Role {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @ManyToMany(type => MisList)
+  @JoinTable()
+  list: MisList[];
+
+  @OneToMany(type => Admin, admin => admin.role)
+  admins: Admin[];
+}
 
 @Entity()
 export class Admin {
   @PrimaryGeneratedColumn()
-  id: Number;
+  id: number;
 
   @Column({
     length: 100
@@ -13,30 +29,22 @@ export class Admin {
   @Column()
   password: string;
 
-  @Column()
-  role: number;
-}
-
-@Entity()
-export class Role {
-  @PrimaryGeneratedColumn()
-  id: Number;
-
-  @Column()
-  name: string;
-
-  @Column()
-  list: string;
+  @ManyToOne(type => Role, role => role.admins)
+  role: Role;
 }
 
 @Entity()
 export class MisList {
   @PrimaryGeneratedColumn()
-  id: Number;
+  id: number;
 
   @Column()
   name: string;
 
   @Column()
   router: string;
+
+  @Column()
+  parentId: number;
+  [x: string]: any;
 }

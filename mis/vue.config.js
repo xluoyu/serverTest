@@ -1,7 +1,7 @@
 const path = require("path")
 
 module.exports = {
-  publicPath: '/mis',
+  publicPath: process.env.NODE_ENV === 'production' ? '/mis' : '',
   pages: {
     index: {
       entry: 'src/main.js',

@@ -11,8 +11,8 @@ axios.defaults.timeout = 5000;
 
 axios.interceptors.request.use(
     config => {
-        const token = 'Bearer ' + localStorage.getItem('token')
-        token && (config.headers.Authorization = token)
+        const token = localStorage.getItem('token')
+        token && (config.headers.Authorization = 'Bearer ' + token)
         return config
     },
     error => {
