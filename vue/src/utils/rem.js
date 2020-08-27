@@ -6,15 +6,15 @@ utils/rem.js
 */
 ((function (document, window) {
   const docEl = document.documentElement
-  const pageWidth = window.config.pageWidth
+//   const pageWidth = window.config.pageWidth || 0
   const resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'
   const recalc = function () {
       const clientWidth = docEl.clientWidth
-      if (pageWidth > 0) {
-          docEl.style.fontSize = (clientWidth && clientWidth < pageWidth ? clientWidth : pageWidth) / 7.5 + 'px'
-      } else {
-          docEl.style.fontSize = clientWidth / 7.5 + 'px'
-      }
+    //   if (pageWidth > 0) {
+    //       docEl.style.fontSize = (clientWidth && clientWidth < pageWidth ? clientWidth : pageWidth) / 7.5 + 'px'
+    //   } else {
+          docEl.style.fontSize = clientWidth / 10 + 'px'
+    //   }
   }
   if (!document.addEventListener) return
   window.addEventListener(resizeEvt, recalc, false)

@@ -1,19 +1,15 @@
-const { override, fixBabelImports, addLessLoader, addWebpackAlias } = require('customize-cra');
+const { override,fixBabelImports, addLessLoader, addWebpackAlias, addPostcssPlugins } = require('customize-cra');
 const path = require("path")
 module.exports = override(
   fixBabelImports('import', {
     libraryName: 'antd-mobile',
-    style: 'css',
+    style: true,
   }),
-  addLessLoader({//less-loader6.x配置
-    lessOptions: {
-        javascriptEnabled: true,
-        modifyVars: {
-            '@primary-color': '#1DA57A'//配置主题颜色；antd提供了其它主题颜色，可根据需要进行切换
-        },
-    },
-  }),
+  addLessLoader(),
+  addPostcssPlugins([
+    require("postcss-px2rem")({ remUnit: 37.5 })
+  ]),
   addWebpackAlias({//配置路径别名
     ["@"]: path.resolve(__dirname, "src")
-}),
+  }),
 );

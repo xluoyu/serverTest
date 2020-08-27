@@ -1,0 +1,6 @@
+.main{
+  width: 375px;
+  height: calc(100vh - 84px);
+  overflow-y: auto;
+  font-size: 18px;
+}
