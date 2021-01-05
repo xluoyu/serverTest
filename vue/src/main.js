@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import axios from './fetch'
 import router from './router'
 import store from './store'
 import Rem from './utils/rem'
+import Loading from './components/Loading'
 
 Vue.config.productionTip = false
-
-// Vue.prototype.$axios = axios
+Vue.prototype.$loading = Loading
+Vue.prototype.eventBus = new Vue
 
 new Vue({
   router,

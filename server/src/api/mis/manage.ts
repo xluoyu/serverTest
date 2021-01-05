@@ -53,12 +53,13 @@ router.post('/public/login', async (ctx:Context) => {
   if (!user) {
     throw new ParamException('用户名不存在');
   } else if (await md5(password) == user.password) {
+    const role = user.role || {}
     ctx.body = {
       status: 200,
       user: {
         username: user.name,
-        role: user.role.name,
-        list: user.role.list,
+        role: role.name || null,
+        list: role.list || [],
       },
       token: jwt.sign({id: user.id}, secret, {expiresIn: '2 days'})
     }

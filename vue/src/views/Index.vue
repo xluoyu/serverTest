@@ -3,7 +3,7 @@
     <div class="flex">
       <router-link :to="{name: item.name}" v-for="item in list" :key="item.name">
         <img :src="item.photo" alt="">
-        <span>{{item.name}}</span>
+        <span>{{item.title}}</span>
       </router-link>
     </div>
   </div>
@@ -13,14 +13,14 @@
   export default {
     data() {
       return {
-        list: [
-          {title: '小商城', name: 'Shop', photo: ''}
-        ]
+        list: [{title: '小商城', name: 'Shop', photo: ''}]
       }
     },
   }
 </script>
 
 <style lang="less" scoped>
-
+a{
+  display: block;
+}
 </style>

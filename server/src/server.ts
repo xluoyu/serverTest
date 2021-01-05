@@ -40,7 +40,19 @@ createConnection()
     app.use(router.routes()).use(router.allowedMethods());
 
     // 运行服务器
-    app.listen(PORT);
+    const server = app.listen(PORT);
     console.log('正在监听端口：', PORT)
+
+    function handleExit(signal: any) {
+      console.log(`Received ${signal}. Close my server properly.`)
+      server.close(function () {
+        process.exit(0);
+      });
+    }
+    process.on('SIGINT', handleExit);
+    process.on('SIGQUIT', handleExit);
+    process.on('SIGTERM', handleExit);
   })
   .catch((err: string) => console.log('TypeORM connection error:', err))
+
+  
